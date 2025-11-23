@@ -1,0 +1,38 @@
+---
+const { project } = Astro.props;
+---
+
+<select
+    aria-label="Change project status"
+    class="w-full h-8 px-4 text-sm border-r-8 border-transparent rounded appearance-none outlin outline-1 outline-neutral-700 select-custom-arrow-icon focus:ring-offset-0 dark:bg-zinc-900 text-zinc-800 dark:text-white"
+    name="status"
+    value={project.status}
+    hx-put={`/app/api/project/${project.id}`}
+    hx-swap="none"
+    hx-trigger="change"
+    hx-vals=`{"action": "change_status"}`
+>
+    <option
+        value="not started"
+        selected={project.status === "not started" && "selected"}
+    >
+        not started
+    </option>
+    <option
+        value="on hold"
+        selected={project.status === "on hold" && "selected"}
+    >
+        on hold
+    </option>
+        started
+    </option>
+    <option
+        value="in progress"
+        selected={project.status === "in progress" && "selected"}
+    >
+        in progress
+    </option>    
+    <option value="done" selected={project.status === "done" && "selected"}>
+        done
+    </option>
+</select>
