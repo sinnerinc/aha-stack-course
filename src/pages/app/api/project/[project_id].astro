@@ -41,10 +41,35 @@ if (Astro.request.method === 'PUT') {
             status as keyof typeof ProjectsStatusOptions
           ],
       })
+
+      
+
     } else {
       return new Response(
         'Need to set "status" parameter',
         { status: 400 }
+      )
+    }
+  } else if (action === 'change_name') {
+    const project_name = formData.get('project_name') as string
+    if (project_name) {
+      await updateProject(Astro.locals.pb, project_id, {
+        id: project_id,
+        name: project_name,
+      })
+      return new Response(null, {
+        status: 204,
+        statusText: 'No Content',
+        headers: {
+          'HX-Redirect': '/app/project/' + project_id,
+        },
+      })
+    } else {
+      return new Response(
+        'Need to set "project_name" parameter',
+        {
+          status: 400,
+        }
       )
     }
   } else {
